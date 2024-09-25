@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/chokaneur_logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tiyokanor32.chokaneur_mobile_app"
     },
     "web": {
       "bundler": "metro",

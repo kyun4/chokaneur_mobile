@@ -15,6 +15,14 @@ export default function ProductView(){
         router.navigate("/main_menu/home")
     }
 
+    const onCheckout = () => {
+        router.navigate("/main_menu/checkout")
+    }
+
+    const onCart= () => {
+        router.navigate("/main_menu/cart")
+    }
+
     const fashion_image: string[] = [
         
         require(`@/assets/fashion_images/2.jpg`),
@@ -83,7 +91,7 @@ export default function ProductView(){
 
         <ScrollView  style = {{marginTop: 25}} showsHorizontalScrollIndicator={false}>
 
-            <Image source = {require('@/assets/fashion_images/2.jpg')}></Image>
+            <Image style = {{ width:"100%" }}  source = {require('@/assets/fashion_images/2.jpg')}></Image>
         
             <View style = {{backgroundColor:"#FFF", height: 1000, padding: 20}}>
 
@@ -110,18 +118,25 @@ export default function ProductView(){
                 </View>
 
                 <View>
-                    <View style = {{ marginTop: 40, backgroundColor:"#0D3E50", borderRadius:20 }}>
-                        <Text style = {{ fontSize: 16, color:"#FFF", padding: 10, textAlign:"center" }}>CHECKOUT</Text>
-                    </View>      
-                    <View style = {{ borderWidth: 1, marginTop: 5, borderColor:"#0D3E50", borderRadius:20 }}>
-                        <Text style = {{ fontSize: 16, color:"#0D3E50", padding: 10, textAlign:"center" }}>Add to Cart</Text>
-                    </View>    
+
+                    <TouchableOpacity onPress={onCheckout}>
+                        <View style = {{ marginTop: 40, backgroundColor:"#0D3E50", borderRadius:20 }}>
+                            <Text style = {{ fontSize: 16, color:"#FFF", padding: 10, textAlign:"center" }}>CHECKOUT</Text>
+                        </View>      
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={onCart}>
+                        <View style = {{ borderWidth: 1, marginTop: 5, borderColor:"#0D3E50", borderRadius:20 }}>
+                            <Text style = {{ fontSize: 16, color:"#0D3E50", padding: 10, textAlign:"center" }}>Add to Cart</Text>
+                        </View>   
+                    </TouchableOpacity> 
+
                 </View>
 
             
                 <View style = {{ marginTop: 40 }}>
                     <Text style = {{fontWeight:"300", marginBottom: 20, fontSize: 14}}>Related Items for dresses</Text>
-                    <FlatList style = {{  width: "100%"}} horizontal data = {fashion_image} renderItem = {({item})=>{
+                    <FlatList  showsHorizontalScrollIndicator = {false} style = {{  width: "100%"}} horizontal data = {fashion_image} renderItem = {({item})=>{
                         return(<View><Image style = {{height: 200, width: 110, marginRight: 10, borderRadius: 10}} source = {item}></Image></View>)
                     }}></FlatList>
                 </View>
