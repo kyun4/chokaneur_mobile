@@ -39,6 +39,7 @@ export default function Profile(){
             height: 95,
             width: 95
         },
+        address_line: { fontSize: 12, fontWeight:"bold",borderBottomWidth: 1, marginLeft: 10, marginTop: 20, marginBottom: 8, paddingBottom: 8, borderStyle: "dashed", borderBottomColor: "#E7E1E1" },
         card_style: {
             shadowColor: "#000000",
             shadowOffset: {height:-4, width: 10},
@@ -98,7 +99,7 @@ export default function Profile(){
         <View style = { style.card_style}>
 
             
-            <Text style = {{ fontSize: 12, fontWeight:"bold",borderBottomWidth: 1, marginLeft: 10, marginTop: 20, marginBottom: 8, paddingBottom: 8, borderStyle: "dashed", borderBottomColor: "#E7E1E1" }}>Address Line</Text>
+            <Text style = {style.address_line}>Address Line</Text>
             
             <View style = {{ flexDirection:"row", marginTop: 10 }}>
                 <Text style = {{ fontSize: 10, marginLeft: 10, fontWeight:"700" }}>Address 1:</Text>

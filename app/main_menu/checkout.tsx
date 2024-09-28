@@ -15,6 +15,10 @@ export default function Checkout(){
         router.navigate("/main_menu/profile")
     }
 
+    const onCheckoutPage = () => {
+        router.navigate("/main_menu/checkout_page")
+    }
+
     const onHome = () => {
         router.navigate("/main_menu/home")
     }
@@ -134,11 +138,11 @@ export default function Checkout(){
           
 
                 
-            <View style = {{ paddingHorizontal:15, marginTop: 10 }}>
+            <TouchableOpacity onPress = {onCheckoutPage} style = {{ paddingHorizontal:15, marginTop: 10 }}>
                 <View>
                     <View style = { style.checkout_button}><Text style = {{ color:"#FFF", textAlign:"center", margin: 15, fontWeight:"500", fontSize:16 }}>CHECKOUT</Text></View>
                 </View>
-            </View>
+            </TouchableOpacity>
 
         </View>
     );
