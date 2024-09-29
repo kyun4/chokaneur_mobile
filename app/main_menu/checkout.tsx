@@ -129,7 +129,7 @@ export default function Checkout(){
 
 
 
-            <View style = {{ paddingHorizontal: 15, paddingVertical: 5,backgroundColor:"#FFF" }}>
+            <View style = {{ paddingHorizontal: 15, paddingVertical: 13,backgroundColor:"#FFF" }}>
                 <Text style = {{ fontSize:7.5,marginLeft:5}}>CHOOSE PAYMENT METHOD</Text>
                 <FlatList style = {{ marginTop: 5, marginBottom:10 }} data = {data_payment_method} showsHorizontalScrollIndicator={false} horizontal renderItem={({item}) => {
                     return(<View><Image style = {{ height: 30, width: 75, marginRight: 5 }} source = {item}></Image></View>);
@@ -138,7 +138,7 @@ export default function Checkout(){
           
 
                 
-            <TouchableOpacity onPress = {onCheckoutPage} style = {{ paddingHorizontal:15, marginTop: 10 }}>
+            <TouchableOpacity onPress = {onCheckoutPage} style = {{ paddingHorizontal:15 }}>
                 <View>
                     <View style = { style.checkout_button}><Text style = {{ color:"#FFF", textAlign:"center", margin: 15, fontWeight:"500", fontSize:16 }}>CHECKOUT</Text></View>
                 </View>

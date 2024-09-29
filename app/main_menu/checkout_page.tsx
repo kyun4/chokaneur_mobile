@@ -1,4 +1,4 @@
-import {Image,ImageBackground,Text,View, StyleSheet, Dimensions,TouchableOpacity, FlatList} from 'react-native';
+import {Image,ImageBackground,Text,View, StyleSheet, Dimensions,TouchableOpacity, FlatList, Modal} from 'react-native';
 import {useRouter} from 'expo-router';
 import React, {useState} from 'react';
 
@@ -6,9 +6,28 @@ export default function CheckoutPage(){
 
     const router = useRouter();
 
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const onOpenChangePaymentModal = () => {
+        setModalVisible(true)
+    }
+
+    const onCloseChangePaymentModal = () => {
+        setModalVisible(false)
+    }
+
     const onBackCheckout = () => {
         router.navigate("/main_menu/checkout")
     }
+
+    const [data_payment_method, setDataPaymentMethod] = useState([
+        require('@/assets/payment_methods/gcash1.png'),
+        require('@/assets/payment_methods/maya1.png'),
+        require('@/assets/payment_methods/seabank1.png'),
+        require('@/assets/payment_methods/cimb1.png'),
+        require('@/assets/payment_methods/gotyme1.png'),
+        require('@/assets/payment_methods/kanorbank1.png') 
+    ]);
 
     const y_dimension = Dimensions.get('window').height;
     const x_dimension = Dimensions.get('window').width;
@@ -64,19 +83,24 @@ export default function CheckoutPage(){
         product_small_description: { fontSize: 10 },
         product_price: { fontSize: 12, fontWeight:"bold", marginLeft: x_dimension-330 },
         product_cart_item_image: {height: 65, width: 45, borderRadius: 4},
-        checkout_button: {backgroundColor:"#0D3E50", borderRadius:10, width: "100%", height: 55, marginTop: 4}
+        checkout_button: {backgroundColor:"#0D3E50", borderRadius:10, width: "100%", height: 55, marginTop: 4},
+
+        centered_view: {flex:1, justifyContent:"center", alignItems:"center", backgroundColor: 'rgba(13,62,80,0.5)'},
+        modal_view: { padding: 20, backgroundColor:"#FFF", borderRadius: 10, width: x_dimension-25, height: 225, shadowColor:"#0D3E50", shadowOpacity: 0.1,shadowOffset: {height:-5, width: 10}, elevation:10, shadowRadius:25 }
     })
 
     return(<View style = {{ flex:1, paddingHorizontal: 10 }}>
 
-        <TouchableOpacity onPress = {onBackCheckout} style = {style.header_style}>
-            <Image style = { style.left_icon } source = {require('@/assets/images/arrowleft1.png')}></Image>
+        <View  style = {style.header_style}>
+            <TouchableOpacity onPress = {onBackCheckout}>
+                <Image style = { style.left_icon } source = {require('@/assets/images/arrowleft1.png')}></Image>
+            </TouchableOpacity>
             <View style = { style.header_sub_style }>
                 <Text style = { style.bold_default }>Checkout Item</Text>
                 <Text style = { style.plain_small}>Details</Text>
             </View>
             <Image style = { style.right_icon } source = {require('@/assets/images/chokaneur_logo.png')}></Image>
-        </TouchableOpacity>
+        </View>
 
        
             <View style = { style.checkout_list_item_box }>
@@ -191,20 +215,63 @@ export default function CheckoutPage(){
 
                 </View>
 
-                <View style = {{flexDirection:"column", backgroundColor:"#FFF", borderRadius: 10, height: 75, marginTop: 10, marginBottom: 10, padding: 10 }}>
-                    <View style = {{ flexDirection:"row", paddingHorizontal: 12, marginTop: 8, justifyContent:"flex-end"}}>
-
-                        <Text style = {{ fontWeight:"bold", fontSize: 16 }}>TOTAL</Text>
-                        <Text style = {{ fontSize: 16 }}> PHP 37,500.00</Text>
-
+                <View style = {{flexDirection:"row", backgroundColor:"#FFF", alignItems:"center", borderColor: "#0D3E50", borderWidth: 1, justifyContent:"space-between", borderRadius: 10, height: 75, marginTop: 10, marginBottom: 10, padding: 10 }}>
+                    <View style = {{ marginLeft: 10, backgroundColor:"#0D3E50", borderRadius:4, padding: 7 }}>
+                        <Text style = {{ fontSize:7, color:"#FFF" }}>Pay Thru</Text>
+                        <Text style = {{ fontWeight:"bold", fontSize: 10, color:"#FFF" }}>CK Pay</Text>
+                        <Text style = {{ fontSize:7, color:"#FFF" }}>Balance: P 500,222.32</Text>
                     </View>
-                    <View style = {{ flexDirection:"row", paddingHorizontal: 12, justifyContent:"flex-end" }}>
+                    <View style = {{flexDirection:"column"}}>
+                        <View style = {{ flexDirection:"row", paddingHorizontal: 12, justifyContent:"flex-end"}}>
 
-                        <Text style = {{ fontWeight:"bold", fontSize: 10 }}>Payment Method: </Text>
-                        <Text style = {{ fontSize: 10 }}>Kanor Bank (E-Wallet)</Text>
-                                    
+                            <Text style = {{ fontWeight:"bold", fontSize: 16 }}>TOTAL</Text>
+                            <Text style = {{ fontSize: 16 }}> PHP 37,500.00</Text>
+
+                        </View>
+                        <View style = {{ flexDirection:"row", paddingHorizontal: 12, justifyContent:"flex-end" }}>
+
+                            <Text style = {{ fontWeight:"bold", fontSize: 10 }}>Default Payment </Text>
+                            <Text style = {{ fontSize: 10 }}>Kanor Bank (E-Wallet)</Text>
+
+                            <TouchableOpacity onPress = {onOpenChangePaymentModal}>
+                                <Text style = {{ fontSize: 8, marginTop: 1, marginLeft: 2 }}> Change</Text>
+                            </TouchableOpacity>
+                                        
+                        </View>
                     </View>
                 </View>
+
+                <Modal animationType="fade" transparent={true} visible={modalVisible} onRequestClose = {onCloseChangePaymentModal}>
+                    <View style = { style.centered_view }>
+                        <View style = { style.modal_view }>
+                            <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
+                                <View style = {{ flexDirection:"column" }}>
+                                    <Text style = {{ fontWeight:"bold" }}>Change Payment Method</Text>
+                                    <Text style = {{ fontSize:8, marginTop: 2 }}>Choose default or preferred payment method</Text>
+                                </View>                              
+
+                                <TouchableOpacity onPress = {onCloseChangePaymentModal}>
+                                    <View style = {{ borderWidth: 1, borderColor:"#0D3E50", borderRadius: 25, height: 25, width: 25 }}><Text style = {{ textAlign:"center", color:"#0D3E50" }}>x</Text></View>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style = {{ marginTop: 20 }}>
+                                <FlatList style = {{ marginBottom:10 }} data = {data_payment_method} showsHorizontalScrollIndicator={false} horizontal renderItem={({item}) => {
+                                    return(<View><Image style = {{ height: 30, width: 75 }} source = {item}></Image></View>);
+                                }}></FlatList>
+                            </View>
+
+                            <View style = {{ padding: 10 }}><Text style = {{ fontSize: 12, textAlign:"right" }}>Link E-Wallet or Bank Account</Text></View>
+
+                            <TouchableOpacity onPress={onCloseChangePaymentModal}>
+                                <View style = {{ borderWidth: 1, marginTop: 10, borderColor:"#0D3E50", borderRadius:20 }}>
+                                    <Text style = {{ fontSize: 16, color:"#0D3E50", padding: 10, textAlign:"center" }}>Save Changes</Text>
+                                </View>   
+                            </TouchableOpacity> 
+
+                        </View>
+                    </View>
+                </Modal>
 
                 <View>
                     <View>
