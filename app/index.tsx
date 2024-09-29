@@ -1,18 +1,99 @@
 import { Text, View , TextInput, StyleSheet, Image, TouchableOpacity, Dimensions, ImageBackground} from "react-native";
 import {useRouter} from 'expo-router';
 import {Icon, Input} from '@rneui/themed';
-import React from "react";
+import React,{useEffect, useState} from "react";
+import {getAuth, createUserWithEmailAndPassword  ,signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDj1tPd7Cl6ONnCNItUO0sNpLAOTGhi1KQ",
+  authDomain: "chokaneur-6932b.firebaseapp.com",
+  projectId: "chokaneur-6932b",
+  storageBucket: "chokaneur-6932b.appspot.com",
+  messagingSenderId: "593659028156",
+  appId: "1:593659028156:web:9de3b013b620f0c92ae6b9"
+};
+
+const app = initializeApp(firebaseConfig) == null ? alert('No firebase') : initializeApp(firebaseConfig);
 
 export default function Index() {
 
+
+
   const router = useRouter();
+  const auth = getAuth();
+  
+
+  const [isLogin, setIsLogin] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const x_dimensions = Dimensions.get('window').width
   const y_dimensions = Dimensions.get('window').height
 
+ 
+
+  const userlogin = async () => {
+
+    try{
+
+      await signInWithEmailAndPassword(auth, email,password);
+
+    }catch(error){
+      console.log(error);
+    }
+     
+ 
+  } // userLogin
+
+  const onCheckLoggedIn = async() => {
+    try{
+
+      await onAuthStateChanged(auth,(user)=>{
+        setUserDetails({
+          "username": user?.displayName,
+          "user_id":user?.uid,
+          "email":user?.email
+        });
+      });
+
+      if(!userDetails){
+
+      }else{
+        router.navigate("/main_menu/home")
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  } // onCheckLoggedIn
+
   const onLogin = () => {
+  
+
+    // userlogin();
+
+    // const unsubscribe = onAuthStateChanged(auth, (user)=>{
+    //   setUserDetails({
+    //     "username": user?.displayName,
+    //     "user_id":user?.uid,
+    //     "email":user?.email
+    //   });
+    // });
+
+    // if(!userDetails){
+    //   alert("User not found");
+    // }else{
+    //   router.navigate("/main_menu/home")
+    // }
+   
     router.navigate("/main_menu/home")
+    
   }
+
+
 
   const style = StyleSheet.create({
 
@@ -161,7 +242,7 @@ export default function Index() {
               color="#0D3E50"
               size={25}
             />
-            <TextInput style = {{ width: x_dimensions-120 }} placeholder = "Email/Username"></TextInput>
+            <TextInput style = {{ width: x_dimensions-120 }} onChangeText={setEmail} placeholder = "Email/Username"></TextInput>
           </View>
 
           <View style = {style.textInputDefault}>
@@ -171,7 +252,7 @@ export default function Index() {
               color="#0D3E50"
               size={25}
             />
-            <TextInput style = {{ width: x_dimensions-120 }} secureTextEntry = {true} placeholder = "Password"></TextInput>
+            <TextInput style = {{ width: x_dimensions-120 }} onChangeText={setPassword} secureTextEntry = {true} placeholder = "Password"></TextInput>
           </View>
       
           <TouchableOpacity style = {style.buttonLoginDefault} onPress={onLogin}>

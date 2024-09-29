@@ -44,7 +44,7 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = 'chokaneurmobileapp'
+rootProject.name = 'chokaneur_mobile_app'
 
 dependencyResolutionManagement {
   versionCatalogs {

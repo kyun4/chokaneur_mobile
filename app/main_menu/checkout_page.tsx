@@ -105,7 +105,7 @@ export default function CheckoutPage(){
         profile_name: {  fontWeight:"bold" },
         profile_sub_name_info: {fontWeight:"300", fontSize: 10},
         profile_customer: { flexDirection:"row", alignItems:"center"},
-        button_change_info: { borderColor: "#0D3E50", marginLeft: x_dimension - 300, borderWidth: 1, height: 35, borderRadius: 20, paddingVertical:8, marginTop: 16,  width: x_dimension-110 },
+        button_change_info: { flexDirection:"row", justifyContent:"center", borderColor: "#0D3E50", borderWidth: 1, height: 35, borderRadius: 20, paddingVertical:8, marginTop: 15,  width: "100%" },
         button_text_change_info: {textAlign:"center", fontSize: 10},
 
         cart_item_box: { borderRadius: 25, backgroundColor:"#FFF" },
@@ -113,7 +113,7 @@ export default function CheckoutPage(){
         product_details: {marginLeft: 20},
         product_name: { fontWeight:"bold",fontSize: 14 },
         product_small_description: { fontSize: 10 },
-        product_price: { fontSize: 12, fontWeight:"bold", marginLeft: x_dimension-330 },
+        product_price: { fontSize: 12, fontWeight:"bold", marginTop: 48, marginLeft: x_dimension-330 },
         product_cart_item_image: {height: 65, width: 45, borderRadius: 4},
         checkout_button: {backgroundColor:"#0D3E50", borderRadius:10, width: "100%", height: 55, marginTop: 4},
 
@@ -140,6 +140,7 @@ export default function CheckoutPage(){
        <ScrollView showsVerticalScrollIndicator = {false}>
             <View style = { style.checkout_list_item_box }>
                 <View style = {style.check_list_item_content}>
+
                     <View style = {style.profile_customer }>
                         <Image style = {style.profile_picture_customer} source = {require('@/assets/images/blankprofilechokaneur1.png')}></Image>
 
@@ -149,36 +150,47 @@ export default function CheckoutPage(){
                         </View>                    
                     </View>
 
-                    <View style = {{ flexDirection:"row", marginLeft: x_dimension - 295 }}>
+                    <View style = {{ marginLeft: 10, marginTop: 10 }}>
 
-                        <Text style = {{ fontWeight:"bold",fontSize: 10, width: 35 }}>Phone: </Text>
-                        <Text style = {{ fontSize: 10, color:"#494547" }}>(+63) 991 357 1853</Text>                   
+                        <View style = {{ flexDirection:"row" }}>
 
-                    </View>
+                            <Text style = {{ fontWeight:"bold",fontSize: 10, width: 35 }}>Phone: </Text>
+                            <Text style = {{ fontSize: 10, color:"#494547" }}>(+63) 991 357 1853</Text>                   
 
-                    <View style = {{ flexDirection:"row", marginLeft: x_dimension - 295 }}>
+                        </View>
 
-                        <Text style = {{ fontWeight:"bold",fontSize: 10, width: 35 }}>Email: </Text>
-                        <Text style = {{ fontSize: 10,color:"#494547" }}>itsftac@gmail.com</Text>                   
+                        <View style = {{ flexDirection:"row" }}>
 
-                    </View>
+                            <Text style = {{ fontWeight:"bold",fontSize: 10, width: 35 }}>Email: </Text>
+                            <Text style = {{ fontSize: 10,color:"#494547" }}>itsftac@gmail.com</Text>                   
 
-                    
-                    <View style = {{ flexDirection:"row", marginLeft: x_dimension - 295, marginTop: 10 }}>
+                        </View>
 
-                        <Text style = {{ fontWeight:"bold",fontSize: 10, width: 65 }}>Address 1: </Text>
-                        <Text style = {{ fontSize: 10,color:"#494547" }}>91 TK Street, BGC, Taguig City</Text>                   
+                        
+                        <View style = {{ flexDirection:"row", marginTop: 10 }}>
 
-                    </View>
+                            <Text style = {{ fontWeight:"bold",fontSize: 10, width: 95 }}>Shipping Address 1: </Text>
+                            <Text style = {{ fontSize: 10,color:"#494547" }}>91 TK Street, BGC, Taguig City</Text>                   
 
-                    <View style = {{ flexDirection:"row", marginLeft: x_dimension - 295 }}>
+                        </View>
 
-                        <Text style = {{ fontWeight:"bold",fontSize: 10, width: 65 }}>Address 2: </Text>
-                        <Text style = {{ fontSize: 10,color:"#494547" }}>32nd Street, W Center, BGC, Taguig City</Text>                   
+                        <View style = {{ flexDirection:"row" }}>
+
+                            <Text style = {{ fontWeight:"bold",fontSize: 10, width: 95 }}>Shipping Address 2: </Text>
+                            <Text style = {{ fontSize: 10,color:"#494547" }}>32nd Street, W Center, BGC, Taguig City</Text>                   
+
+                        </View>
 
                     </View>
                  
                     <TouchableOpacity style = {style. button_change_info}>
+                        <Icon
+                            name="edit"
+                            type="font-awesome" // You can specify the icon library
+                            color="#0D3E50"
+                            size={16}
+                            style={{ marginRight: 5 }}
+                        />
                         <Text style = {style.button_text_change_info}>Change Info</Text>
                     </TouchableOpacity>
                         
@@ -253,13 +265,10 @@ export default function CheckoutPage(){
                                         <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
                                         
                                             <View style = {{ flexDirection:"row" }}>
-                                                <Text style = {{ fontWeight:"bold", fontSize: 10, width: 35  }}>Item: </Text>
-                                                <Text style = {{ fontSize: 10 }}>1 </Text>
+                                                <Text style = {{ fontWeight:"bold", fontSize: 10, width: 75  }}>Item * Price: </Text>
+                                                <Text style = {{ fontSize: 10 }}>1 x P7,500.00</Text>
                                             </View>           
-
-                                            <View style = {{ flexDirection:"row", alignItems:"center" }}>                                            
-                                                <Text style = {{ fontSize: 8 }}>P7,500.00 / item</Text>
-                                            </View>                          
+                   
                                     
                                         </View>
                                                                         

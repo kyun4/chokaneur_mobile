@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "593659028156",
+    "project_id": "chokaneur-6932b",
+    "storage_bucket": "chokaneur-6932b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593659028156:android:9afbc971ed3379062ae6b9",
+        "android_client_info": {
+          "package_name": "com.tiyokanor32.chokaneur_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfXA72YYC47lAlONqndsssYiThBqmpUZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

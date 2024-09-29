@@ -1,18 +1,37 @@
 import React,{useState} from 'react';
 import {Text,Image,View,StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import {useRouter} from 'expo-router';
+import {getAuth, createUserWithEmailAndPassword  ,signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth';
+import { initializeApp } from "firebase/app";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyDj1tPd7Cl6ONnCNItUO0sNpLAOTGhi1KQ",
+    authDomain: "chokaneur-6932b.firebaseapp.com",
+    projectId: "chokaneur-6932b",
+    storageBucket: "chokaneur-6932b.appspot.com",
+    messagingSenderId: "593659028156",
+    appId: "1:593659028156:web:9de3b013b620f0c92ae6b9"
+};
+  
+const app = initializeApp(firebaseConfig) == null ? alert('No firebase') : initializeApp(firebaseConfig);
+  
 export default function Profile(){
 
     const router = useRouter();
+    const auth = getAuth();
 
-    const onLogout = () => {
+    const onLogout = async () => {
+
+        await signOut(auth);
+
         router.navigate("/")
     }
 
     const onHome = () => {
         router.navigate("/main_menu/home")
     }
+
+    
 
     const [data_payment_method, setDataPaymentMethod] = useState([
         require('@/assets/payment_methods/gcash1.png'),
