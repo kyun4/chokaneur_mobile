@@ -140,7 +140,7 @@ export default function Checkout(){
                 
             <TouchableOpacity onPress = {onCheckoutPage} style = {{ paddingHorizontal:15 }}>
                 <View>
-                    <View style = { style.checkout_button}><Text style = {{ color:"#FFF", textAlign:"center", margin: 15, fontWeight:"500", fontSize:16 }}>CHECKOUT</Text></View>
+                    <View style = { style.checkout_button}><Text style = {{ color:"#FFF", textAlign:"center", margin: 15, fontWeight:"500", fontSize:16 }}>Proceed to Payment</Text></View>
                 </View>
             </TouchableOpacity>
 

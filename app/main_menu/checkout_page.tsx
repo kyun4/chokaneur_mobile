@@ -1,6 +1,8 @@
-import {Image,ImageBackground,Text,View, StyleSheet, Dimensions,TouchableOpacity, FlatList, Modal} from 'react-native';
+import {Image,ImageBackground,Text,View, StyleSheet, Dimensions,TouchableOpacity, FlatList, ScrollView, Modal, Animated} from 'react-native';
 import {useRouter} from 'expo-router';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
+import {Icon, Input} from '@rneui/themed';
+
 
 export default function CheckoutPage(){
 
@@ -20,6 +22,21 @@ export default function CheckoutPage(){
         router.navigate("/main_menu/checkout")
     }
 
+
+
+    const renderLeftActions = () => {
+        return (<TouchableOpacity style = {style.LeftAction} onPress = {() => alert('Ay Nadelete')}>
+
+            <Icon
+                name="trash"
+                type="font-awesome" // You can specify the icon library
+                color="#0D3E50"
+                size={25}                
+              />
+
+        </TouchableOpacity>)
+    }
+
     const [data_payment_method, setDataPaymentMethod] = useState([
         require('@/assets/payment_methods/gcash1.png'),
         require('@/assets/payment_methods/maya1.png'),
@@ -28,6 +45,18 @@ export default function CheckoutPage(){
         require('@/assets/payment_methods/gotyme1.png'),
         require('@/assets/payment_methods/kanorbank1.png') 
     ]);
+
+    var data_checkout_products_images = ([
+        require('@/assets/fashion_images/2.jpg'),
+        require('@/assets/fashion_images/3.jpg'),
+        require('@/assets/fashion_images/7.jpg'),        
+        require('@/assets/fashion_images/24.jpg'),
+        require('@/assets/fashion_images/23.jpg'),
+        require('@/assets/fashion_images/5.jpg'),
+    ])
+
+    var data_checkout_products = ["IU Dress 1","Golden Hour Attire","HEREH","Blueming","World Tour 2028","IU x UI Summit"]
+    var item_count = 0;
 
     const y_dimension = Dimensions.get('window').height;
     const x_dimension = Dimensions.get('window').width;
@@ -49,7 +78,7 @@ export default function CheckoutPage(){
             shadowRadius: 25,
             elevation: 10,
             width: x_dimension-20,
-            height: 280,
+            height: data_checkout_products.length * 98,
             marginTop: 10
         },
         check_list_item_content: {
@@ -60,10 +89,13 @@ export default function CheckoutPage(){
             paddingHorizontal: 10,
             paddingVertical: 20
         },
-        section_header_line: { fontSize: 14, fontWeight:"bold",borderBottomWidth: 1, marginLeft: 10, marginBottom: 8, paddingBottom: 10, borderStyle: "dashed", borderBottomColor: "#E7E1E1" },
-        section_header_line_secondary: { fontSize: 14, fontWeight:"bold",borderBottomWidth: 1, marginRight: 10, marginBottom: 8, paddingBottom: 10, borderStyle: "dashed", borderBottomColor: "#E7E1E1" },
+        section_header_line: { flexDirection:"row", justifyContent:"space-between",borderBottomWidth: 1, marginLeft: 10, marginBottom: 8, paddingBottom: 10, borderStyle: "dashed", borderBottomColor: "#E7E1E1" },
+        section_header_text: { fontSize: 14, fontWeight:"bold" },
+        section_header_secondary: { marginTop: 1, fontSize: 8, fontWeight:"300" },
+        section_header_primary: { marginTop: 1, fontSize: 8, fontWeight:"300", textAlign:"right" },
         left_icon: { marginLeft: -10, height: 55, width: 55 },
         right_icon: { marginRight: -10, height: 40, width: 40 },
+        LeftAction: {alignItems:"flex-start", justifyContent:"center"}, 
         header_style: { marginTop: 35, marginRight: 20, flexDirection:"row", justifyContent:"space-between", alignItems:"center" },
         header_sub_style: { flexDirection:"column" },
         bold_default: {fontSize:14, fontWeight:"bold"},
@@ -102,7 +134,10 @@ export default function CheckoutPage(){
             <Image style = { style.right_icon } source = {require('@/assets/images/chokaneur_logo.png')}></Image>
         </View>
 
-       
+
+   
+
+       <ScrollView showsVerticalScrollIndicator = {false}>
             <View style = { style.checkout_list_item_box }>
                 <View style = {style.check_list_item_content}>
                     <View style = {style.profile_customer }>
@@ -151,62 +186,97 @@ export default function CheckoutPage(){
                 </View>
             </View>
 
+        
+
             <View style = {style.checkout_list_item_box_products}>
                 <View style = {style.check_list_item_content}>
 
-                    <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
-                        <Text style = {style.section_header_line}>Product(s) to Checkout</Text>
-                        <Text style = {style.section_header_line_secondary}>5 Item(s)</Text>
+                    <View style = {style.section_header_line}>
+                      
+                        <View style = {{ flexDirection:"column", justifyContent:"center" }}>
+                            <Text style = {style.section_header_text}>Product(s) to Checkout</Text>
+                            <Text style = {style.section_header_secondary}>Swipe item right for more actions</Text>
+                        </View>
+                       
+                            
+                        
+                        <View style = {{ flexDirection:"column", justifyContent:"center" }}>
+                            <Text style = {style.section_header_text}>5 Item(s)</Text>
+                            <Text style = {style.section_header_primary}>Back to Cart</Text>
+                        </View>
+                       
                     </View>
                     
 
                     <View>
 
-                    <FlatList style = {{ height: 210 }}  showsVerticalScrollIndicator = {false} data = {["IU Dress 1","Golden Hour Attire","HEREH","Blueming","World Tour 2028","IU x UI Summit"]} renderItem = {({item})=>{
+                  
+                    <FlatList scrollEnabled = {false} data = {data_checkout_products} keyExtractor={(item,index)=> index.toString()}  renderItem = {({item, index})=>{
+                
+     
+             
+
                 return(
                  
-                        <View style = {style.product_details_box}>
-                            
-                           
-                           
-                                <View style = { style.cart_item_box }>
-                                    <Image style = { style.product_cart_item_image } source = {require('@/assets/fashion_images/12.jpg')}></Image>
-                                </View>
+                   
 
-                                <View style=  {style.product_details}>
-
-                                    <Text style = {style.product_name}>{item}</Text>
-                                    <Text style = {style.product_small_description}>Product ID: 20391003010903</Text>
-
+                            <View style = {style.product_details_box}>
                                 
-
-                                    <View style = {{ flexDirection:"row", marginTop: 4, justifyContent:"space-between" }}>
-                                    
-                                        <View style = {{ flexDirection:"row" }}>
-                                            <Text style = {{ fontWeight:"bold", fontSize: 10 }}>Color: </Text>
-                                            <Text style = {{ fontSize: 10 }}>Beige </Text>
-                                        </View>
-
-                                        <View style = {{ flexDirection:"row" }}>
-                                            <Text style = {{ fontWeight:"bold", fontSize: 10 }}>Size: </Text>
-                                            <Text style = {{ fontSize: 10 }}>S </Text>
-                                        </View>
+                              
+                            
+                                    <View style = { style.cart_item_box }>
+                                        <Image style = { style.product_cart_item_image } source = {data_checkout_products_images[index]}></Image>
                                     
                                     </View>
-                                                                    
-                                </View>
 
-                                <View>
-                                    <Text style = { style.product_price }>PHP 7,500.00 </Text>
-                                </View>
+                                    <View style=  {style.product_details}>
 
+                                        <Text style = {style.product_name}>{item}</Text>
+                                        <Text style = {style.product_small_description}>Product ID: 20391003010903</Text>
+
+                                    
+
+                                        <View style = {{ flexDirection:"row", marginTop: 4, justifyContent:"space-between" }}>
+                                        
+                                            <View style = {{ flexDirection:"row" }}>
+                                                <Text style = {{ fontWeight:"bold", fontSize: 10, width: 35 }}>Color: </Text>
+                                                <Text style = {{ fontSize: 10 }}>Beige </Text>
+                                            </View>
+
+                                            <View style = {{ flexDirection:"row" }}>
+                                                <Text style = {{ fontWeight:"bold", fontSize: 10 }}>Size: </Text>
+                                                <Text style = {{ fontSize: 10 }}>S </Text>
+                                            </View>
+                                        
+                                        </View>
+
+                                        <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
+                                        
+                                            <View style = {{ flexDirection:"row" }}>
+                                                <Text style = {{ fontWeight:"bold", fontSize: 10, width: 35  }}>Item: </Text>
+                                                <Text style = {{ fontSize: 10 }}>1 </Text>
+                                            </View>           
+
+                                            <View style = {{ flexDirection:"row", alignItems:"center" }}>                                            
+                                                <Text style = {{ fontSize: 8 }}>P7,500.00 / item</Text>
+                                            </View>                          
+                                    
+                                        </View>
+                                                                        
+                                    </View>
+
+                                    <View>
+                                        <Text style = { style.product_price }>PHP 7,500.00 </Text>
+                                    </View>
+
+                                    
                                 
-                             
 
-                            
+                                   
 
-                        </View>
-
+                            </View>
+                           
+                       
                    
                 );
               }}></FlatList>
@@ -215,7 +285,12 @@ export default function CheckoutPage(){
 
                 </View>
 
-                <View style = {{flexDirection:"row", backgroundColor:"#FFF", alignItems:"center", borderColor: "#0D3E50", borderWidth: 1, justifyContent:"space-between", borderRadius: 10, height: 75, marginTop: 10, marginBottom: 10, padding: 10 }}>
+                
+
+
+            </View>
+
+            <View style = {{flexDirection:"row", backgroundColor:"#FFF", alignItems:"center", borderColor: "#0D3E50", borderWidth: 1, justifyContent:"space-between", borderRadius: 10, height: 75, marginTop: 10, marginBottom: 10, padding: 10 }}>
                     <View style = {{ marginLeft: 10, backgroundColor:"#0D3E50", borderRadius:4, padding: 7 }}>
                         <Text style = {{ fontSize:7, color:"#FFF" }}>Pay Thru</Text>
                         <Text style = {{ fontWeight:"bold", fontSize: 10, color:"#FFF" }}>CK Pay</Text>
@@ -245,7 +320,7 @@ export default function CheckoutPage(){
                     <View style = { style.centered_view }>
                         <View style = { style.modal_view }>
                             <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
-                                <View style = {{ flexDirection:"column" }}>
+                                <View style = {{ flexDirection:"column", marginLeft: 10 }}>
                                     <Text style = {{ fontWeight:"bold" }}>Change Payment Method</Text>
                                     <Text style = {{ fontSize:8, marginTop: 2 }}>Choose default or preferred payment method</Text>
                                 </View>                              
@@ -261,10 +336,18 @@ export default function CheckoutPage(){
                                 }}></FlatList>
                             </View>
 
-                            <View style = {{ padding: 10 }}><Text style = {{ fontSize: 12, textAlign:"right" }}>Link E-Wallet or Bank Account</Text></View>
+                            <View style = {{ flexDirection:"row", justifyContent:"space-between" }}>
+
+                                <View style = {{ flexDirection:"column" }}>
+                                    <View style = {{ paddingHorizontal: 10, marginTop: 10 }}><Text style = {{ fontSize: 12, fontWeight:"bold" }}>Kanor Bank</Text></View>
+                                    <View style = {{ marginLeft: 10 }} ><Text style = {{ fontSize: 7 }}>Default</Text></View>
+                                </View>
+                                
+                                <View style = {{ padding: 10 }}><Text style = {{ fontSize: 12, textAlign:"right" }}>Link E-Wallet or Bank Account</Text></View>
+                            </View>
 
                             <TouchableOpacity onPress={onCloseChangePaymentModal}>
-                                <View style = {{ borderWidth: 1, marginTop: 10, borderColor:"#0D3E50", borderRadius:20 }}>
+                                <View style = {{ borderWidth: 1, marginTop: 15, borderColor:"#0D3E50", borderRadius:20 }}>
                                     <Text style = {{ fontSize: 16, color:"#0D3E50", padding: 10, textAlign:"center" }}>Save Changes</Text>
                                 </View>   
                             </TouchableOpacity> 
@@ -280,10 +363,8 @@ export default function CheckoutPage(){
                         </TouchableOpacity>
                     </View>
                 </View>
-
-
-            </View>
        
+            </ScrollView>
 
     </View>); 
 }
