@@ -2,7 +2,7 @@ import { Text, View , TextInput, StyleSheet, Image, TouchableOpacity, Dimensions
 import {useRouter} from 'expo-router';
 import {Icon, Input} from '@rneui/themed';
 import React,{useEffect, useState} from "react";
-import {getAuth, createUserWithEmailAndPassword  ,signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword  ,signInWithEmailAndPassword, onAuthStateChanged, signOut} from '@firebase/auth';
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -33,7 +33,6 @@ export default function Index() {
   const x_dimensions = Dimensions.get('window').width
   const y_dimensions = Dimensions.get('window').height
 
- 
 
   const userlogin = async () => {
 
@@ -41,59 +40,29 @@ export default function Index() {
 
       await signInWithEmailAndPassword(auth, email,password);
 
+      const unsubscribe = onAuthStateChanged(auth, (user)=>{
+   
+
+          if(user != null){
+            router.navigate("/main_menu/home")
+          }
+
+      });
+
     }catch(error){
-      console.log(error);
+      alert(error);
     }
-     
+
+
  
   } // userLogin
 
-  const onCheckLoggedIn = async() => {
-    try{
-
-      await onAuthStateChanged(auth,(user)=>{
-        setUserDetails({
-          "username": user?.displayName,
-          "user_id":user?.uid,
-          "email":user?.email
-        });
-      });
-
-      if(!userDetails){
-
-      }else{
-        router.navigate("/main_menu/home")
-      }
-
-    }catch(error){
-      console.log(error)
-    }
-  } // onCheckLoggedIn
 
   const onLogin = () => {
   
-
-    // userlogin();
-
-    // const unsubscribe = onAuthStateChanged(auth, (user)=>{
-    //   setUserDetails({
-    //     "username": user?.displayName,
-    //     "user_id":user?.uid,
-    //     "email":user?.email
-    //   });
-    // });
-
-    // if(!userDetails){
-    //   alert("User not found");
-    // }else{
-    //   router.navigate("/main_menu/home")
-    // }
-   
-    router.navigate("/main_menu/home")
+    userlogin();
     
   }
-
-
 
   const style = StyleSheet.create({
 
